@@ -1,9 +1,49 @@
-<h3>Browse Topic's</h3>
-<div>
-    <a href="{% url 'home' %}">All</a>
+<style>
+
+    .head h3{
+    text-align:center;
+    }
+    .topic-list {
+    padding: 7px 20px;
+    font-size: 18px;
+    font-weight: 500;
+    box-sizing: border-box;
+    border-top: 2px solid lightslategray;
+}
+.all a {
+    color: white;
+    background: black;
+    display: inherit;
+    padding: 10px;
+    border: none;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+.topic a {
+    color: white;
+    background: black;
+    display: inherit;
+    padding: 10px;
+    border: none;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+</style>
+
+<div class="main-topic">
+    <div class="head my-2 ">
+        <h3>Browse Topic's</h3>
+    </div>
+    <div class="topic-list">
+        <div class="all">
+            <a href="{% url 'home' %}">All</a>
+        </div>
+        <!--    loop list    -->
+        {% for topic in topics %}
+        <div class="topic">
+            <a href="{% url 'home' %}?q={{ topic.name }}">{{ topic.name }}</a>
+        </div>
+        {% endfor %}
+    </div>
 </div>
-{% for topic in topics %}
-<div>
-    <a href="{% url 'home' %}?q={{ topic.name }}">{{ topic.name }}</a>
-</div>
-{% endfor %}

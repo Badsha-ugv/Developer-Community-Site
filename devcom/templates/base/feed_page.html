@@ -1,14 +1,89 @@
-{% for room in rooms %}
+<style>
+
+    .main-feed {
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    padding: 15px;
+    position: relative;
+    border:1px solid lightgrey;
+
+}
+.feed-top {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid;
+    padding-bottom: 10px;
+        margin-bottom: 10px;
+}
+
+.feed-user h3 a {
+    font-size: 16px;
+    font-weight: 500;
+    border: 1px solid transparent;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: #1851a7;
+    color: #fff !important;
+    font-family: cursive;
+}
+.feed-bottom {
+    margin-top: 20px;
+}
+
+.feed-bottom small {
+    color: green;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+}
+.feed-bottom small {
+    border: 1px solid transparent;
+    padding: 4px 15px;
+    border-radius: 20px;
+    background: lightgray;
+    box-shadow: 2px 6px 15px #9b9191;
+}
+
+.feed-middle {
+    background: #0e1016c7;
+    padding: 30px 20px;
+    text-align: center;
+    border: none;
+    margin-top: 0;
+}
+.feed-middle h3 a {
+    color: white;
+    text-shadow: 10px 10px 17px black;
+}
+
+
+</style>
+
+<!--End of Style-->
+
 <div>
-    {% if request.user == room.host %}
-    <a href="{% url 'update-room' room.id %}">Edit</a>
-    <a href="{% url 'delete-room' room.id %}">Delete</a>
-    {% endif %}
-    <h3>
-        <a href="{% url 'user-profile' room.host.id %}"> @{{ room.host.username }}</a>
-        <h5>{{ room.id }} --> <a href="{% url 'room' room.id %}">{{ room.name }} </a></h5>
-        <small>{{ room.topic.name }}</small>
-    </h3>
-    <hr>
+    {% for room in rooms %}
+    <div class="main-feed">
+        <div class="feed-top">
+            <div class="feed-user">
+                <h3>
+                    <a href="{% url 'user-profile' room.host.id %}"> @{{ room.host.username }}</a>
+                </h3>
+            </div>
+            <div class="feed-edit">
+                {% if request.user == room.host %}
+                <a class="btn btn-sm btn-outline-success" href="{% url 'update-room' room.id %}">Edit</a>
+                <a class="btn btn-sm btn-outline-danger" href="{% url 'delete-room' room.id %}">Delete</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="feed-middle">
+            <h3><a href="{% url 'room' room.id %}">{{ room.name }} </a></h3>
+        </div>
+        <div class="feed-bottom">
+
+            <small>{{ room.topic.name }}</small>
+
+        </div>
+    </div>
+    {% endfor %}
 </div>
-{% endfor %}

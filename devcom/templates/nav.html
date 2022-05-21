@@ -1,13 +1,69 @@
-<a href="/"> Logo </a>
-<div>
-    <form method="GET" action="{% url 'home' %}">
-        <input type="text" name="q" placeholder="Search Room's">
-    </form>
+<style>
+.nav-style
+{
+    display: grid;
+    justify-content: space-between;
+    height: 50px;
+    align-items: center;
+    background: #263240;
+    grid-auto-flow: column;
 
-    {% if request.user.is_authenticated %}
-    <a href="{% url 'logout-page' %}">Logout</a>
-    {% else %}
-    <a href="{% url 'login-page' %}">Login</a>
-    {% endif %}
+}
+.logo a {
+    color: lawngreen;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+input.search-item {
+    padding: 3px 10px;
+    border-radius: 5px;
+    text-align: center;
+    display: inline-block;
+    border: transparent;
+    outline:0;
+}
+.user-profile{ margin-right:50px;}
+.logo{margin-left:50px;}
+.user-profile a {
+    color: burlywood;
+    font-size: 20px;
+}
+
+
+
+
+
+
+
+
+</style>
+
+
+<!---->
+<div class="main">
+    <div class="nav nav-style">
+        <div class="logo ml-2">
+            <a href="/"> <i class="fa-solid fa-circle-nodes"></i> UGV DEV. COM. </a>
+        </div>
+        <div class="search-box">
+            <form method="GET" class="search" action="{% url 'home' %}">
+                <input type="text" class="search-item" name="q" placeholder="Search Room's">
+
+
+                <!--          test      -->
+
+
+
+                    <!--         end test      -->
+            </form>
+        </div>
+        <div class="user-profile">
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'logout-page' %}">Logout</a>
+            {% else %}
+            <a href="{% url 'login-page' %}">Login</a>
+            {% endif %}
+        </div>
+    </div>
 </div>
-<hr />

@@ -1,50 +1,86 @@
-{% extends 'main.html' %} {% block content %}
+{% extends 'main.html' %}
+{% block content %}
 
+<!--new room design-->
 <style>
     .room-container{
     display:grid;
-    grid-template-columns:4fr 1fr;
+    grid-template-columns:3fr 1fr;
+    grid-gap:25px;
+
     }
+    .room-box {
+    box-sizing: border-box;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 25px;
+    border: 2px solid darkorchid;
+    padding: 20px 25px;
+    min-height: 100vh;
+    margin-bottom: 10px;
+    position: relative;
+}
+.msg-send-box form {
+    position: relative;
+    margin-bottom: -30px;
+    margin-top: 30px;
+    border-top: 1px solid;
+    padding-top: 10px;
+}
+
 
 </style>
-<!--style-->
+<!--End of style-->
+<h2>{{room.name}}</h2>
+<p>{{ room.description }}</p>
+<h3>Conversation</h3>
+
 
 <div class="room-container">
-    <div>
-        <h2>{{room.name}}</h2>
-        <p>{{ room.description }}</p>
-        <h3>Conversation</h3>
-        <hr>
+    <div class="room-box">
+
         {% for msg in room_message %}
         <div>
             <small>@ {{ msg.user }} {{ msg.created|timesince }}</small>
             <br>
             <span> {{ msg.body }} </span>
             {% if request.user == msg.user %}
-            <a href="{% url 'delete-msg' msg.id %}">delete</a>
+            <a href="{% url 'delete-msg' msg.id %}">
+                <i class="fa-solid fa-xmark"></i>
+            </a>
+
             {% endif %}
             <hr>
         </div>
         {% endfor %}
-        <div>
+        <div class="msg-send-box">
             {% if request.user.is_authenticated %}
             <form action="" method="POST">
                 {% csrf_token %}
-                <input type="text" name="msg_body" id="" placeholder="write your message here..">
-                <input type="submit" value="send">
+                <!--                <input type="text" name="msg_body" id="" placeholder="write your message here..">-->
+                <!--                <input type="submit" value="send">-->
+
+                <div class="input-group mb-3 w-50 m-auto">
+                    <input type="text" name="msg_body" class="form-control" placeholder="Recipient's username"
+                           aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">send</button>
+                </div>
             </form>
             {% endif %}
         </div>
+
     </div>
-    <div>
-        <h3>Perticipant's</h3>
-        <hr>
-        {% for user in  participants %}
+
+    <!--  perticipate -->
+    <div class="perticipate-box">
         <div>
-            <p>@{{ user.username }}</p>
+            <h3>Perticipant's</h3>
+            {% for user in participants %}
+            <div>
+                <p>@{{ user.username }}</p>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 </div>
-
 {% endblock %}

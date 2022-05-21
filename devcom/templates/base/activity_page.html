@@ -1,12 +1,66 @@
-<h3>Recent Activities</h3>
-<hr>
-{% for message in room_message %}
-<small>@{{ message.user.username }}</small>
-<small>{{ message.created|timesince }}</small> <br>
-<small>replied to "{{ message.room }} "</small>
-<p>{{ message.body }}</p>
-{% if request.user == message.user %}
-<a href="{% url 'delete-msg' message.id %}">delete</a>
-{% endif %}
-<hr>
-{% endfor %}
+<style>
+    .activity-list {
+    border-top: 2px solid grey;
+    padding: 10px 15px;
+    box-sizing: border-box;
+}
+.activity {
+    border: 1px solid black;
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.user-info strong {
+    border: 1px solid gray;
+    padding: 3px 5px;
+    border-radius: 20px;
+    background: black;
+    font-weight: 500;
+    color: white;
+    font-family: serif;
+}
+
+.activity-msg p {
+    border: 1px solid gray;
+    padding: 5px 8px;
+    background: white;
+}
+.activity-msg small {
+    font-size: 15px;
+}
+.activity-msg small span {
+    color: #352ae7;
+    font-weight: 500;
+    font-family: monospace;
+}
+
+</style>
+<!--Activity New-->
+
+<div class="main-activity">
+    <div class="head my-2 ">
+        <h3>Recent Activity's </h3>
+    </div>
+    <div class="activity-list">
+        {% for message in room_message %}
+        <div class="activity">
+            <div class="user-info">
+                <strong class="">@{{ message.user.username }}</strong>
+                <small class="text-muted">{{ message.created|timesince}} ago</small>
+            </div>
+            <div class="activity-msg">
+
+                <small>replied to - <span> "{{ message.room }}" </span> </small>
+                <p>{{ message.body }}</p>
+            </div>
+            <!--   clear btn     -->
+            <div class="activity-clear">
+                {% if request.user == message.user %}
+                <a class="btn btn-outline-danger btn-sm" href="{% url 'delete-msg' message.id %}">delete</a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
