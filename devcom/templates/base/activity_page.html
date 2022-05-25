@@ -45,7 +45,8 @@
         {% for message in room_message %}
         <div class="activity">
             <div class="user-info">
-                <strong class="">@{{ message.user.username }}</strong>
+                <strong
+                        class=""><a href="{% url 'user-profile' message.user.id %}">@{{ message.user.username }}</a></strong>
                 <small class="text-muted">{{ message.created|timesince}} ago</small>
             </div>
             <div class="activity-msg">

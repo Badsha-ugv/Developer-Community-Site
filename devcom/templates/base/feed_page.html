@@ -44,7 +44,7 @@
 }
 
 .feed-middle {
-    background: #0e1016c7;
+    background: #720d0dc7;
     padding: 30px 20px;
     text-align: center;
     border: none;
@@ -61,7 +61,7 @@
 <!--End of Style-->
 
 <div>
-    {% for room in rooms %}
+    {% for room in page_obj %}
     <div class="main-feed">
         <div class="feed-top">
             <div class="feed-user">
@@ -86,4 +86,5 @@
         </div>
     </div>
     {% endfor %}
+
 </div>

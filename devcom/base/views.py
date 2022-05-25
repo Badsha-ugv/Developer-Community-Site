@@ -5,9 +5,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
+from django.urls import reverse
 from .models import Room, Topic, Message
 from .forms import RoomForm
 from django.db.models import Q
+from django.core.paginator import Paginator
 
 # Create your views here.
 
@@ -26,8 +28,16 @@ def home(request):
     topic = Topic.objects.all()
     room_count = rooms.count()
     room_message = Message.objects.filter(Q(room__topic__name__icontains=q))
+
+    # paginator
+
+    p = Paginator(Room.objects.all(),3)
+    page_number = request.GET.get('page')
+    page_obj = p.get_page(page_number)
+
     context = {'rooms': rooms, 'topics': topic,
-               'room_count': room_count, 'room_message': room_message}
+               'room_count': room_count, 'room_message': room_message,'page_obj':page_obj}
+
     return render(request, 'base/home.html', context)
 
 
@@ -116,7 +126,7 @@ def deleteMessage(request, pk):
         return HttpResponse('You Can not Delete this message!')
     if request.method == 'POST':
         msg.delete()
-        return redirect('home')
+        return redirect(reverse('home'))
     return render(request, 'base/room_delete.html', {'obj': msg})
 
 

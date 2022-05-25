@@ -1,4 +1,5 @@
 {% extends 'main.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
 
 <!--new room design-->
@@ -29,10 +30,56 @@
 }
 
 
+.participate-box {
+    border: 2px solid darkmagenta;
+    padding: 15px;
+}
+.participant h3 {
+    font-weight: 600;
+    font-family: monospace;
+    border-bottom: 3px solid cornflowerblue;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.participant p {
+    border: 1px solid;
+    padding: 5px 10px;
+    font-size: 20px;
+    font-weight: 500;
+    font-family: monospace;
+    background: black;
+    color: white;
+    margin-bottom: 10px;
+    display: table;
+}
+
+
+
 </style>
 <!--End of style-->
-<h2>{{room.name}}</h2>
-<p>{{ room.description }}</p>
+
+<div class="accordion w-100 m-auto my-3" id="accordionPanelsStayOpenExample">
+
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-headingOne">
+            <button class="accordion-button btn btn-dark" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                    aria-controls="panelsStayOpen-collapseOne">
+                {{room.name}}
+            </button>
+        </h2>
+        <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+             aria-labelledby="panelsStayOpen-headingOne">
+            <div class="accordion-body">
+                <p>{{ room.description }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<h2>{{room.name}}</h2>-->
+<!--<p>{{ room.description }}</p>-->
 <h3>Conversation</h3>
 
 
@@ -72,13 +119,13 @@
     </div>
 
     <!--  perticipate -->
-    <div class="perticipate-box">
-        <div>
+    <div class="participate-box">
+        <div class="participant">
             <h3>Perticipant's</h3>
             {% for user in participants %}
-            <div>
-                <p>@{{ user.username }}</p>
-            </div>
+
+            <p>@{{ user.username }}</p>
+
             {% endfor %}
         </div>
     </div>

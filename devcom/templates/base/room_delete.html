@@ -1,10 +1,38 @@
 {% extends 'main.html' %}
 
 {% block content %}
-<form action="" method="POST">
-    <p>Are you sure you want to delete {{obj }} ?</p>
-    {% csrf_token %}
-    <input type="submit" value="Delete">
-    <a href="{{ request.META.HTTP_REFERER }}" > Back </a>
-</form>
+<style>
+
+    .delete {
+    width: 500px;
+    margin: auto;
+    border-radius:10px;
+    margin-top: 106px;
+    text-align: center;
+
+    box-shadow: 0px 0px 5px #838080;
+
+}
+.msg {
+    font-size: 20px;
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+</style>
+
+<div class="delete">
+    <div class="msg pt-2">
+        <p>Are you sure you want to delete {{obj }} ?</p>
+    </div>
+    <div class="del-btn p-2">
+        <form action="" method="POST">
+
+            {% csrf_token %}
+            <input type="submit" value="Delete" class="btn btn-danger">
+            <a href="{{ request.META.HTTP_REFERER }}" class="btn btn-info"> Back </a>
+        </form>
+    </div>
+</div>
+
 {% endblock %}
