@@ -41,6 +41,7 @@ input.search-item {
 
 
 
+
 </style>
 
 
@@ -58,8 +59,11 @@ input.search-item {
         <div class="user-profile">
 
             {% if request.user.is_authenticated %}
-            <a href="">{{ request.user.username }}</a>
+            <a href="{% url 'user-profile' user.id %}">{{ request.user.username }}</a>
             <a href="{% url 'logout-page' %}">Logout</a>
+            <a href="{% url 'update-user' %}">Update</a>
+            <!--drop down-->
+            <!--drop down-->
             {% else %}
             <a href="{% url 'login-page' %}">Login</a>
             {% endif %}

@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.urls import reverse
 from .models import Room, Topic, Message
-from .forms import RoomForm
+from .forms import RoomForm,UserForm
 from django.db.models import Q
 from django.core.paginator import Paginator
 
@@ -31,12 +31,12 @@ def home(request):
 
     # paginator
 
-    p = Paginator(Room.objects.all(),3)
-    page_number = request.GET.get('page')
-    page_obj = p.get_page(page_number)
+    # p = Paginator(Room.objects.all(),3)
+    # page_number = request.GET.get('page')
+    # page_obj = p.get_page(page_number)
 
     context = {'rooms': rooms, 'topics': topic,
-               'room_count': room_count, 'room_message': room_message,'page_obj':page_obj}
+               'room_count': room_count, 'room_message': room_message}
 
     return render(request, 'base/home.html', context)
 
@@ -178,3 +178,14 @@ def userProfile(request, pk):
     context = {'user': user, 'rooms': rooms,
                'topics': topics, 'room_message': room_message}
     return render(request, 'base/profile.html', context)
+@login_required(login_url='login')
+def updateUser(request):
+    user = request.user
+    form = UserForm()
+    if request.method == 'POST':
+        form = UserForm(request.POST,instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('user-profile',pk=user.id)
+
+    return render(request, 'base/update-user.html',{'form':form})
