@@ -3,33 +3,37 @@
     border-top: 2px solid grey;
     padding: 10px 15px;
     box-sizing: border-box;
+    height:620px;
+    overflow-y:scroll;
 }
 .activity {
-    border: 1px solid black;
+    border: 1px solid transparent;
     margin-bottom: 5px;
     padding: 5px 10px;
     border-radius: 5px;
+    background-color: #283f4d;
+    color:#ffffff;
 }
-.user-info strong {
-    border: 1px solid gray;
-    padding: 3px 5px;
-    border-radius: 20px;
-    background: black;
-    font-weight: 500;
-    color: white;
-    font-family: serif;
-}
+<!--.user-info strong {-->
+<!--    border: 1px solid gray;-->
+<!--    padding: 3px 5px;-->
+<!--    border-radius: 20px;-->
+<!--    background: black;-->
+<!--    font-weight: 500;-->
+<!--    color: white;-->
+<!--    font-family: serif;-->
+<!--}-->
 
 .activity-msg p {
     border: 1px solid gray;
     padding: 5px 8px;
-    background: white;
+    
 }
 .activity-msg small {
     font-size: 15px;
 }
 .activity-msg small span {
-    color: #352ae7;
+    color: #d4e72a;
     font-weight: 500;
     font-family: monospace;
 }
@@ -46,8 +50,8 @@
         <div class="activity">
             <div class="user-info">
                 <strong
-                        class=""><a href="{% url 'user-profile' message.user.id %}">@{{ message.user.username }}</a></strong>
-                <small class="text-muted">{{ message.created|timesince}} ago</small>
+                        class=""><a class="btn btn-sm btn-success" href="{% url 'user-profile' message.user.id %}">@{{ message.user.username }}</a></strong>
+                <small class="">{{ message.created|timesince}} ago</small>
             </div>
             <div class="activity-msg">
 
@@ -57,7 +61,7 @@
             <!--   clear btn     -->
             <div class="activity-clear">
                 {% if request.user == message.user %}
-                <a class="btn btn-outline-danger btn-sm" href="{% url 'delete-msg' message.id %}">delete</a>
+                <a class="btn btn-danger btn-sm" href="{% url 'delete-msg' message.id %}">delete</a>
                 {% endif %}
             </div>
         </div>

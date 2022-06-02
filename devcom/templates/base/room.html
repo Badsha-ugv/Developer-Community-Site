@@ -4,6 +4,160 @@
 
 <!--new room design-->
 <style>
+
+    /* chat box sumu  */
+    
+    
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #4c4c6a;
+    border-radius: 2px;
+}
+
+
+.chatbox {
+    min-height: 500px;
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28);
+}
+
+.chat-window {
+    flex: auto;
+    max-height: calc(100% - 60px);
+    background: #030b2f;
+    overflow: auto;
+}
+
+.chat-input {
+    flex: 0 0 auto;
+    height: 60px;
+    background: #030b2f;
+    border-top: 1px solid #2671ff;
+    box-shadow: 0 0 4px rgba(0, 0, 0, .14), 0 4px 8px rgba(0, 0, 0, .28);
+}
+
+.chat-input input {
+    height: 50px;
+    line-height: 60px;
+    outline: 0 none;
+    border: none;
+    border-radius: 20px;
+    width: calc(100% - 70px);
+    color: white;
+    text-indent: 10px;
+    font-size: 12pt;
+    padding: 0;
+    margin:5px;
+    background: #212949;
+}
+
+.chat-input button {
+    float: right;
+    outline: 0 none;
+    border: none;
+    background: rgba(255, 255, 255, .25);
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    padding: 2px 0 0 0;
+    margin: 10px;
+    transition: all 0.15s ease-in-out;
+}
+.chat-input button i{
+    background: #03293a;
+}
+
+.msg-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    margin: 0 0 10px 0;
+    padding: 10px;
+}
+
+.msg-box {
+    display: flex;
+    background: #3a4579;
+    padding: 10px 10px 0 10px;
+    border-radius: 0 6px 6px 0;
+    max-width: 80%;
+    width: auto;
+    float: left;
+    box-shadow: 0 0 2px rgba(0, 0, 0, .12), 0 2px 4px rgba(0, 0, 0, .24);
+}
+
+.user-img {
+    display: inline-block;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    background: #2671ff;
+    margin: 0 10px 10px 0;
+}
+
+.flr {
+    /*flex: 1 0 auto;*/
+    display: flex;
+    flex-direction: column;
+    width: calc(100% - 50px);
+}
+
+.messages {
+    flex: 1 0 auto;
+}
+
+.msg {
+    display: inline-block;
+    font-size: 11pt;
+    line-height: 13pt;
+    color: rgba(255, 255, 255, .7);
+    margin: 0 0 4px 0;
+}
+
+.msg:first-of-type {
+    margin-top: 8px;
+}
+
+.timestamp {
+    color: rgba(0, 0, 0, .38);
+    font-size: 8pt;
+    margin-bottom: 10px;
+}
+
+.username {
+    margin-right: 3px;
+}
+
+.posttime {
+    margin-left: 3px;
+}
+
+/*.msg-self .msg-box {
+    border-radius: 6px 0 0 6px;
+    background: #2671ff;
+    float: right;
+}
+
+.msg-self .user-img {
+    margin: 0 0 10px 10px;
+}
+
+.msg-self .msg {
+    text-align: right;
+}
+
+.msg-self .timestamp {
+    text-align: right;
+}
+    
+    /* chat box sumu  */
+
     .room-container{
     display:grid;
     grid-template-columns:3fr 1fr;
@@ -23,10 +177,7 @@
 }
 .msg-send-box form {
     position: relative;
-    margin-bottom: -30px;
-    margin-top: 30px;
     border-top: 1px solid;
-    padding-top: 10px;
 }
 
 
@@ -53,6 +204,10 @@
     margin-bottom: 10px;
     display: table;
 }
+.accordion-body p{
+color:white;
+}
+
 
 
 
@@ -61,18 +216,20 @@
 
 <div class="accordion w-100 m-auto my-3" id="accordionPanelsStayOpenExample">
 
-    <div class="accordion-item">
+    <div class="accordion-item mx-5 bg-dark">
         <h2 class="accordion-header" id="panelsStayOpen-headingOne">
             <button class="accordion-button btn btn-dark" type="button" data-bs-toggle="collapse"
                     data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
                     aria-controls="panelsStayOpen-collapseOne">
-                {{room.name}}
+                {{room.name}} [ Room Description ]
             </button>
         </h2>
         <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
              aria-labelledby="panelsStayOpen-headingOne">
             <div class="accordion-body">
-                <p>{{ room.description }}</p>
+                <pre>
+                <p>{{ room.description }} </p>
+                </pre>
             </div>
         </div>
     </div>
@@ -80,7 +237,7 @@
 
 <!--<h2>{{room.name}}</h2>-->
 <!--<p>{{ room.description }}</p>-->
-<h3>Conversation</h3>
+<h3 class=""> Conversation</h3>
 
 
 <div class="room-container">
@@ -88,35 +245,61 @@
 
         {% for msg in room_message %}
         <div>
-            <a href="{% url 'user-profile' msg.user.id %}" ></a>
+            <a href="{% url 'user-profile' msg.user.id %}"></a>
             <small>@{{ msg.user }} {{ msg.created|timesince }}</small>
             <br>
             <span> {{ msg.body }} </span>
-            {% if request.user == msg.user %}
-            <a href="{% url 'delete-msg' msg.id %}">
-                <i class="fa-solid fa-xmark"></i>
-            </a>
 
-            {% endif %}
+            <!--            delete msg-->
+
             <hr>
         </div>
         {% endfor %}
+        
         <div class="msg-send-box">
-            {% if request.user.is_authenticated %}
-            <form action="" method="POST">
-                {% csrf_token %}
-                <!--                <input type="text" name="msg_body" id="" placeholder="write your message here..">-->
-                <!--                <input type="submit" value="send">-->
-
-                <div class="input-group mb-3 w-50 m-auto">
-                    <input type="text" name="msg_body" class="form-control" placeholder="Recipient's username"
-                           aria-label="Recipient's username" aria-describedby="button-addon2">
-                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">send</button>
+            
+            <section class="chatbox">
+                <div class="chat-window">
+                    <article class="msg-container msg-remote" id="msg-0">
+                        <div class="msg-box">
+            
+                        <img class="user-img" src="img/img-1.jpg">
+                            <div class="flr">
+                                <div class="messages">
+                                    <p class="msg" id="msg-0">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorem,
+                                        eveniet?</p>
+                                </div>
+                                <span class="timestamp"><span class="username">Israt</span>&bull;<span class="posttime">3
+                                        minutes
+                                        ago</span></span>
+                            </div>
+                        </div>
+                    </article>
+                
+                    <article class="msg-container msg-remote" id="msg-0">
+                        <div class="msg-box">
+                            <img class="user-img" src="img/img-1.jpg">
+                            <div class="flr">
+                                <div class="messages">
+                                    <p class="msg" id="msg-0">iserid0976 </p>
+                                </div>
+                                <span class="timestamp"><span class="username">Name</span>&bull;<span
+                                        class="posttime">Now</span></span>
+                            </div>
+                        </div>
+                    </article>
+            
                 </div>
-            </form>
-            {% endif %}
-        </div>
+                <form class="chat-input" onsubmit="return false;">
+                    <input type="text" autocomplete="on" placeholder="Type a message" />
+                    <button>
+                        <i class="fas-solid fa-send"></i>
+                    </button>
+                </form>
+            </section>
 
+
+        </div>
     </div>
 
     <!--  perticipate -->

@@ -2,6 +2,7 @@
 
     .main-feed {
     box-sizing: border-box;
+    background-color: #283f4d;
     margin-bottom: 10px;
     padding: 15px;
     position: relative;
@@ -22,7 +23,7 @@
     border: 1px solid transparent;
     padding: 3px 10px;
     border-radius: 20px;
-    background: #1851a7;
+    background: #8dbce5c7;
     color: #fff !important;
     font-family: cursive;
 }
@@ -44,15 +45,22 @@
 }
 
 .feed-middle {
-    background: #720d0dc7;
-    padding: 30px 20px;
-    text-align: center;
+    /* background: #8dbce5c7; */
+    /* padding: 30px 20px; */
+    /* text-align: center; */
     border: none;
     margin-top: 0;
+    padding-top: 15px;
 }
 .feed-middle h3 a {
     color: white;
-    text-shadow: 10px 10px 17px black;
+    
+
+}
+.feed-middle h3 a:hover{
+    color:rgb(77, 137, 163);
+    letter-spacing: 2px;
+    
 }
 
 
@@ -61,7 +69,8 @@
 <!--End of Style-->
 
 <div>
-    {% for room in rooms %}
+    {% for room in page_obj %}
+
     <div class="main-feed">
         <div class="feed-top">
             <div class="feed-user">
@@ -71,8 +80,8 @@
             </div>
             <div class="feed-edit">
                 {% if request.user == room.host %}
-                <a class="btn btn-sm btn-outline-success" href="{% url 'update-room' room.id %}">Edit</a>
-                <a class="btn btn-sm btn-outline-danger" href="{% url 'delete-room' room.id %}">Delete</a>
+                <a class="btn btn-sm btn-success" href="{% url 'update-room' room.id %}">Edit</a>
+                <a class="btn btn-sm btn-danger" href="{% url 'delete-room' room.id %}">Delete</a>
                 {% endif %}
             </div>
         </div>
@@ -86,5 +95,28 @@
         </div>
     </div>
     {% endfor %}
+
+        <!--        paginator-->
+<!--                <nav aria-label="Page navigation example  m-auto">-->
+<!--                    <ul class="pagination justify-content-center ">-->
+<!--                        {% if page_obj.has_previous %}-->
+<!--                        <li class="page-item ">-->
+<!--                            <a class="page-link" href="?page=1">&laquo; First</a>-->
+<!--                        </li>-->
+<!--                        <li class="page-item">-->
+<!--                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>-->
+<!--                        </li>-->
+<!--                        {% endif %}-->
+
+<!--                        {% if page_obj.has_next %}-->
+<!--                        <li class="page-item">-->
+<!--                            <a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a>-->
+<!--                        </li>-->
+<!--                        <li class="page-item">-->
+<!--                            <a class="page-link" href="?page={{ page_obj.paginator.num_pages  }}">Last &raquo;</a>-->
+<!--                        </li>-->
+<!--                        {% endif %}-->
+<!--                    </ul>-->
+<!--                </nav>-->
 
 </div>

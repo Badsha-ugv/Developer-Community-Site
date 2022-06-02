@@ -31,12 +31,12 @@ def home(request):
 
     # paginator
 
-    # p = Paginator(Room.objects.all(),3)
-    # page_number = request.GET.get('page')
-    # page_obj = p.get_page(page_number)
+    p = Paginator(rooms,3)
+    page_number = request.GET.get('page')
+    page_obj = p.get_page(page_number)
 
     context = {'rooms': rooms, 'topics': topic,
-               'room_count': room_count, 'room_message': room_message}
+               'room_count': room_count, 'room_message': room_message,'page_obj':page_obj}
 
     return render(request, 'base/home.html', context)
 
@@ -175,7 +175,7 @@ def userProfile(request, pk):
     rooms = user.room_set.all()
     room_message = user.message_set.all()
     topics = Topic.objects.all()
-    context = {'user': user, 'rooms': rooms,
+    context = {'user': user, 'page_obj': rooms,
                'topics': topics, 'room_message': room_message}
     return render(request, 'base/profile.html', context)
 @login_required(login_url='login')

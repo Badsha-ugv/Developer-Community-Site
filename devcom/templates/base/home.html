@@ -40,27 +40,27 @@
         {% include 'base/feed_page.html' %}
 
         <!--        paginator-->
-        <!--        <nav aria-label="Page navigation example  m-auto">-->
-        <!--            <ul class="pagination justify-content-center ">-->
-        <!--                {% if page_obj.has_previous %}-->
-        <!--                <li class="page-item ">-->
-        <!--                    <a class="page-link" href="?page=1">&laquo; First</a>-->
-        <!--                </li>-->
-        <!--                <li class="page-item">-->
-        <!--                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>-->
-        <!--                </li>-->
-        <!--                {% endif %}-->
+                <nav aria-label="Page navigation example  m-auto">
+                    <ul class="pagination justify-content-center ">
+                        {% if page_obj.has_previous %}
+                        <li class="page-item ">
+                            <a class="page-link" href="?page=1">&laquo; First</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                        </li>
+                        {% endif %}
 
-        <!--                {% if page_obj.has_next %}-->
-        <!--                <li class="page-item">-->
-        <!--                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a>-->
-        <!--                </li>-->
-        <!--                <li class="page-item">-->
-        <!--                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages  }}">Last &raquo;</a>-->
-        <!--                </li>-->
-        <!--                {% endif %}-->
-        <!--            </ul>-->
-        <!--        </nav>-->
+                        {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.paginator.num_pages  }}">Last &raquo;</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
 
     </div>
     <div grid-three>
