@@ -1,14 +1,23 @@
 {% extends 'main.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-<center>
-    <div class="w-50">
+<style>
+    .update_form{
+        padding: 30px;
+        background: #fff;
+        padding: 20px;
+        border-radius: 20px;
+    }
+</style>
+
+<center style="background-color:#145b69cf; padding: 30px;">
+    <div class="w-50 update_form">
 
     <h2>Update User Info</h2>
-    <form action="" method="POST">
+    <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form|crispy}}
-        <input type="submit" class="btn btn-success mt-2">
+        <input type="submit" class="btn btn-primary mt-2">
     </form>
     </div>
 </center>

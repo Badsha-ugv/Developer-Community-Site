@@ -1,5 +1,6 @@
 {% extends 'main.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 {% block content %}
 
 <!--new room design-->
@@ -19,7 +20,8 @@
 
 
 .chatbox {
-    min-height: 500px;
+
+    min-height:500px;
     max-height: 100%;
     display: flex;
     flex-direction: column;
@@ -32,6 +34,9 @@
     max-height: calc(100% - 60px);
     background: #030b2f;
     overflow: auto;
+    height:500px;
+
+
 }
 
 .chat-input {
@@ -61,7 +66,7 @@
     float: right;
     outline: 0 none;
     border: none;
-    background: rgba(255, 255, 255, .25);
+    background: transparent;
     height: 40px;
     width: 40px;
     border-radius: 50%;
@@ -70,7 +75,8 @@
     transition: all 0.15s ease-in-out;
 }
 .chat-input button i{
-    background: #03293a;
+    color: white !important;
+    font-size: 30px;
 }
 
 .msg-container {
@@ -125,9 +131,13 @@
 }
 
 .timestamp {
-    color: rgba(0, 0, 0, .38);
-    font-size: 8pt;
+    font-size: 12px;
     margin-bottom: 10px;
+    color: burlywood;
+}
+.timestamp span a {
+    color: #d4ed87;
+    font-size: 15px;
 }
 
 .username {
@@ -162,16 +172,17 @@
     display:grid;
     grid-template-columns:3fr 1fr;
     grid-gap:25px;
+    margin-top:-25px;
 
     }
     .room-box {
-    box-sizing: border-box;
+
     margin-left: 50px;
     margin-right: 50px;
     margin-top: 25px;
-    border: 2px solid darkorchid;
-    padding: 20px 25px;
-    min-height: 100vh;
+
+
+
     margin-bottom: 10px;
     position: relative;
 }
@@ -208,7 +219,20 @@
 color:white;
 }
 
+.conversation-text{
+    text-align: center;
+    display: inline-flex;
+    background: #030b2f;
+    margin-left: 50px;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px 5px 0 0;
 
+    }
+.conversation-text i {
+    font-size: 23px;
+    margin-left: 6px;
+}
 
 
 </style>
@@ -237,69 +261,58 @@ color:white;
 
 <!--<h2>{{room.name}}</h2>-->
 <!--<p>{{ room.description }}</p>-->
-<h3 class=""> Conversation</h3>
 
+<div class="conversation-text">
+
+    <h3 class=""> Conversation</h3>
+    <span>
+         <i class="fa-solid fa-comment"></i>
+    </span>
+</div>
 
 <div class="room-container">
+
     <div class="room-box">
 
-        {% for msg in room_message %}
-        <div>
-            <a href="{% url 'user-profile' msg.user.id %}"></a>
-            <small>@{{ msg.user }} {{ msg.created|timesince }}</small>
-            <br>
-            <span> {{ msg.body }} </span>
+        <section class="chatbox">
+            <div class="chat-window">
+                {% for msg in room_message %}
+                <article class="msg-container msg-remote" id="msg-0">
+                    <div class="msg-box">
 
-            <!--            delete msg-->
+                        <img class="user-img" src="{{ msg.user.avatar.url }}">
+                        <div class="flr">
+                            <div class="messages">
+                                <p class="msg" id="msg-0">
+                                    {{ msg.body }}
+                                </p>
+                            </div>
+                            <span class="timestamp">
+                                    <span class="username">
+                                        <a href="{% url 'user-profile' msg.user.id %}">
+                                              <small>@{{ msg.user.username }}</small>
+                                        </a>
+                                    </span>
+                                    <span class="posttime">{{ msg.created|timesince }}</span>
+                                </span>
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
 
-            <hr>
-        </div>
-        {% endfor %}
-        
-        <div class="msg-send-box">
-            
-            <section class="chatbox">
-                <div class="chat-window">
-                    <article class="msg-container msg-remote" id="msg-0">
-                        <div class="msg-box">
-            
-                        <img class="user-img" src="img/img-1.jpg">
-                            <div class="flr">
-                                <div class="messages">
-                                    <p class="msg" id="msg-0">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorem,
-                                        eveniet?</p>
-                                </div>
-                                <span class="timestamp"><span class="username">Israt</span>&bull;<span class="posttime">3
-                                        minutes
-                                        ago</span></span>
-                            </div>
-                        </div>
-                    </article>
-                
-                    <article class="msg-container msg-remote" id="msg-0">
-                        <div class="msg-box">
-                            <img class="user-img" src="img/img-1.jpg">
-                            <div class="flr">
-                                <div class="messages">
-                                    <p class="msg" id="msg-0">iserid0976 </p>
-                                </div>
-                                <span class="timestamp"><span class="username">Name</span>&bull;<span
-                                        class="posttime">Now</span></span>
-                            </div>
-                        </div>
-                    </article>
-            
-                </div>
-                <form class="chat-input" onsubmit="return false;">
-                    <input type="text" autocomplete="on" placeholder="Type a message" />
+            </div>
+            <div class="msg-send-box">
+                <form class="chat-input" method="POST" action="">
+                    {% csrf_token %}
+                    
+                    <input type="text" name="msg_body" autocomplete="on" placeholder="Type a message"/>
                     <button>
-                        <i class="fas-solid fa-send"></i>
+                        <i class="fa-solid fa-paper-plane"></i>
                     </button>
+
                 </form>
-            </section>
-
-
-        </div>
+            </div>
+        </section>
     </div>
 
     <!--  perticipate -->

@@ -46,13 +46,15 @@ input.search-item {
 
 
 </style>
-
+{% load static %}
 
 <!---->
 <div class="main">
     <div class="nav nav-style">
         <div class="logo ml-2">
-            <a href="/"> <i class="fa-solid fa-circle-nodes"></i> UGV DEV. COM. </a>
+            <a href="/"> <i class="fa-solid fa-layer-group"></i> UGV DEV. COM. </a>
+
+
         </div>
         <div class="search-box">
             <form method="GET" class="search" action="{% url 'home' %}">
@@ -61,15 +63,43 @@ input.search-item {
         </div>
         <div class="user-profile">
 
-            {% if request.user.is_authenticated %}
-            <!-- <a href="{% url 'user-profile' user.id %}">{{ request.user.username }}</a> -->
-            <a href="{% url 'logout-page' %}">Logout</a>
+            <!-- new line -->
+
+            <div class="d-inline p-2">
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'user-profile' user.id %}">
+                    <img src="{{ user.avatar.url }}"  class="rounded-circle" width="35" height="35">
+                    <strong>{{ request.user.name }}</strong>
+                </a>
+                {% endif %}
+            </div>
+            
+            <div class="dropdown-center d-inline ">
+                <button style="border:none" class="btn btn-outline-light btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    {% if request.user.is_authenticated %}
+                    <li><a class="dropdown-item" href="{% url 'update-user' %}">Update</a></li>
+                    <li><a class="dropdown-item" href="{% url 'logout-page' %}">logout</a></li>
+                    {% else %}
+                    <li><a class="dropdown-item" href="{% url 'login-page' %}">login</a></li>
+                   
+                    {% endif %}
+                </ul>
+            </div>
+
+            <!-- new line -->
+
+            <!-- {% if request.user.is_authenticated %}
+             <a href="{% url 'user-profile' user.id %}">{{ request.user.username }}</a> -->
+            <!-- <a href="{% url 'logout-page' %}">Logout</a> -->
             <!-- <a href="{% url 'update-user' %}">Update</a> -->
             <!--drop down-->
             <!--drop down-->
-            {% else %}
-            <a href="{% url 'login-page' %}">Login</a>
-            {% endif %}
+            <!-- {% else %} -->
+            <!-- <a href="{% url 'login-page' %}">Login</a> -->
+            <!-- {% endif %} -->
         </div>
     </div>
 </div>

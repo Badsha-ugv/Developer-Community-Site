@@ -17,16 +17,15 @@
         margin-bottom: 10px;
 }
 
-.feed-user h3 a {
-    font-size: 16px;
+
+    .feed-user h3 a {
+    font-size: 20px;
     font-weight: 500;
-    border: 1px solid transparent;
-    padding: 3px 10px;
-    border-radius: 20px;
-    background: #8dbce5c7;
     color: #fff !important;
-    font-family: cursive;
+    margin-left: 7px;
+    font-family: monospace;
 }
+
 .feed-bottom {
     margin-top: 20px;
 }
@@ -41,7 +40,7 @@
     padding: 4px 15px;
     border-radius: 20px;
     background: lightgray;
-    box-shadow: 2px 6px 15px #9b9191;
+
 }
 
 .feed-middle {
@@ -62,8 +61,14 @@
     letter-spacing: 2px;
     
 }
-
-
+.feed-user img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+.feed-user{
+    margin-top: 5px;
+}
 </style>
 
 <!--End of Style-->
@@ -73,9 +78,10 @@
 
     <div class="main-feed">
         <div class="feed-top">
-            <div class="feed-user">
+            <div class="feed-user d-flex">
+                <img  src="{{ room.host.avatar.url }}" alt="">
                 <h3>
-                    <a href="{% url 'user-profile' room.host.id %}"> @{{ room.host.username }}</a>
+                    <a href="{% url 'user-profile' room.host.id %}">{{ room.host.name }}</a>
                 </h3>
             </div>
             <div class="feed-edit">
